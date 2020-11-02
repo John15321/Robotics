@@ -1,0 +1,522 @@
+\documentclass{article}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage[makeroom]{cancel}
+\usepackage{hyperref}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\title{Opracowanie Robotyka}
+\author{Jan Bronicki}
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+
+
+\section{Wykład 1}
+
+
+\subsection{Warunki, aby macierz była macierzą obrotu}
+
+Aby macierz obrotu {\bf R} była macierzą obrotu musi spełniać warunki:
+
+\begin{itemize}
+    \item $R^{T}R=I_{3}$ - macierz musi być ortogonalna
+    \item $det R=+1$ - macierz musi być {\bf \it prawoskrętna}
+    \item $T$ - (Translacja) - może być dowolna
+\end{itemize}
+
+\subsection{Jak sprawdzić prawoskrętność?}
+
+Dla:
+
+\begin{itemize}
+    \item $i$ - wersor osi {\bf X}
+    \item $j$ - wersor osi {\bf Y}
+    \item $k$ - wersor osi {\bf Z}
+\end{itemize}
+
+Warunki prawoskrętności:
+
+\begin{itemize}
+    \item $i \times j = k$
+    \item $j \times k = i$
+    \item $k \times j = j$
+\end{itemize}
+
+{\bf $T$} - (Translacja, czyli przesunięcie) - dowolna.
+
+\subsection{Obroty stanowią grupę}
+
+Obroty stanowią grupę, która jest zbiorem działań, w którym jest zdefiniowany element odwrotny i neutralny:
+
+\begin{itemize}
+    \item Element neutralny - $I_{3}$
+    \item Element odwrotny - $R^{T}$
+\end{itemize}
+
+\newpage
+
+\subsection{Macierze obrotów ZXY}
+
+\Large
+$$
+    rot \left(z, \alpha\right) = \begin{bmatrix}
+        {\color{purple} c_{\alpha}} & {\color{red}-}{\color{blue} s_{\alpha}} & 0 \\[0.3em]
+        {\color{blue} s_{\alpha}}   & {\color{purple} c_{\alpha}}             & 0 \\[0.3em]
+        0                           & 0                                       & 1
+    \end{bmatrix}
+$$
+
+$$
+    rot \left(x, \beta\right) = \begin{bmatrix}
+        1 & 0                          & 0                                      \\[0.3em]
+        0 & {\color{purple} c_{\beta}} & {\color{red}-}{\color{blue} s_{\beta}} \\[0.3em]
+        0 & {\color{blue} s_{\beta}}   & {\color{purple} c_{\beta}}
+    \end{bmatrix}
+$$
+
+
+$$
+    rot \left(y, \gamma\right) = \begin{bmatrix}
+        {\color{purple} c_{\gamma}}             & 0 & {\color{blue} s_{\gamma}}   \\[0.3em]
+        0                                       & 1 & 0                           \\[0.3em]
+        {\color{red}-}{\color{blue} s_{\gamma}} & 0 & {\color{purple} c_{\gamma}}
+    \end{bmatrix}
+$$
+\normalsize
+
+\section{Wykład 2}
+
+\subsection{Współrzędne jednorodne, rozszerzenie do 4 wymiarów}
+
+\Large
+$$
+    p_{0} = R_{0}^{1} \cdot p_{1}
+$$
+\normalsize
+
+\begin{itemize}
+    \item $p_{0}$ - położenie wektora w układzie "0"
+    \item $p_{1}$ - położenie wektora w ukłądzie "1"
+    \item $R_{0}^{1}$ - macierz obrotu z położenia "0" do "1"
+\end{itemize}
+
+Uwzględniając Translacje:
+
+\Large
+$$
+    p_{0} = R_{0}^{1} \cdot p_{1} + T_{0}^{1}
+$$
+\normalsize
+
+$T_{0}^{1}$ - to inaczej odległość pomiędzy początkami układów współrzędnych
+
+Dodajemy czwarty wymiar, aby łatwiej manipulować:
+\Large
+$$
+    \begin{pmatrix}
+        p_{0} \\
+        1
+    \end{pmatrix}
+    =
+    \begin{bmatrix}
+        \begin{array}{c|c}
+            R_{0_{3x3}}^{1} & T_{0_{3x1}}^{1} \\[0.3em]
+            \hline
+            0_{_{1x3}}      & 1
+        \end{array}
+    \end{bmatrix}
+    \begin{pmatrix}
+        p_{1} \\
+        1
+    \end{pmatrix}
+$$
+\normalsize
+
+\newpage
+
+Przykłady, na macierzach jednorodnych (gdzie $T = \left[0, 0, 0\right]^{T}$):
+
+
+
+\Large
+$$
+    Rot(x, \alpha) =
+    \begin{bmatrix}
+        \begin{array}{ccc|c}
+            1 & 0                           & 0                                       & 0 \\[0.3em]
+            0 & {\color{purple} c_{\alpha}} & {\color{red}-}{\color{blue} s_{\alpha}} & 0 \\[0.3em]
+            0 & {\color{blue} s_{\alpha}}   & {\color{purple} c_{\alpha}}             & 0 \\[0.3em]
+            \hline
+            0 & 0                           & 0                                       & 1
+        \end{array}
+    \end{bmatrix}
+$$
+\normalsize
+
+
+\Large
+$$
+    Rot(y, \beta) =
+    \begin{bmatrix}
+        \begin{array}{ccc|c}
+            {\color{purple} c_{\gamma}}             & 0 & {\color{blue} s_{\gamma}}   & 0 \\[0.3em]
+            0                                       & 1 & 0                           & 0 \\[0.3em]
+            {\color{red}-}{\color{blue} s_{\gamma}} & 0 & {\color{purple} c_{\gamma}} & 0 \\[0.3em]
+            \hline
+            0                                       & 0 & 0                           & 1
+        \end{array}
+    \end{bmatrix}
+$$
+\normalsize
+
+
+
+\Large
+$$
+    Rot(z, \gamma) =
+    \begin{bmatrix}
+        \begin{array}{ccc|c}
+            {\color{purple} c_{\alpha}} & {\color{red}-}{\color{blue} s_{\alpha}} & 0 & 0 \\[0.3em]
+            {\color{blue} s_{\alpha}}   & {\color{purple} c_{\alpha}}             & 0 & 0 \\[0.3em]
+            0                           & 0                                       & 1 & 0 \\[0.3em]
+            \hline
+            0                           & 0                                       & 0 & 1
+        \end{array}
+    \end{bmatrix}
+$$
+\normalsize
+
+
+\newpage
+
+Przykłady Translacji po danych osiach (bez rotacji):
+
+
+\Large
+$$
+    Trans(x, a) =
+    \begin{bmatrix}
+        \begin{array}{ccc|c}
+            1 & 0 & 0 & a \\[0.3em]
+            0 & 1 & 0 & 0 \\[0.3em]
+            0 & 0 & 1 & 0 \\[0.3em]
+            \hline
+            0 & 0 & 0 & 1
+        \end{array}
+    \end{bmatrix}
+$$
+\normalsize
+
+
+\Large
+$$
+    Trans(y, b) =
+    \begin{bmatrix}
+        \begin{array}{ccc|c}
+            1 & 0 & 0 & 0 \\[0.3em]
+            0 & 1 & 0 & b \\[0.3em]
+            0 & 0 & 1 & 0 \\[0.3em]
+            \hline
+            0 & 0 & 0 & 1
+        \end{array}
+    \end{bmatrix}
+$$
+\normalsize
+
+
+
+\Large
+$$
+    Trans(z, c) =
+    \begin{bmatrix}
+        \begin{array}{ccc|c}
+            1 & 0 & 0 & 0 \\[0.3em]
+            0 & 1 & 0 & 0 \\[0.3em]
+            0 & 0 & 1 & c \\[0.3em]
+            \hline
+            0 & 0 & 0 & 1
+        \end{array}
+    \end{bmatrix}
+$$
+\normalsize
+
+
+Inna interpolacja:
+
+Gdy $T_{0}^{1} = 0$ układy nie są przesunięte względem siebie, ale są skręcone:
+np (gdzie 1, to i-te miejsce):
+
+\Large
+$$
+    p_{1}=e_{i}=\begin{pmatrix}
+        0 \\
+        1 \\
+        0
+    \end{pmatrix}
+$$
+
+$$
+    \begin{pmatrix}
+        p_{0} \\
+        1
+    \end{pmatrix}
+    =
+    \begin{bmatrix}
+        \begin{array}{c|c}
+            R_{0_{3x3}}^{1} & 0 \\[0.3em]
+            \hline
+            0_{_{1x3}}      & 1
+        \end{array}
+    \end{bmatrix}
+    \begin{pmatrix}
+        e_{1} \\
+        1
+    \end{pmatrix}
+$$
+\normalsize
+
+\newpage
+
+\subsection{Dzięki współrzędnym jednorodnym operacja rotacji i translacji jest reprezentowana przez jedną macierz}
+
+Ważne:
+
+\begin{itemize}
+    \item Rotacje następujące po sobię są mnożeniem następujących macierzy obrotu
+    \item Współrzędne jednorodne są grupą nieprzemienną, z działaniem "mnożenie macierzy"
+          $$
+              K =
+              \begin{bmatrix}
+                  R & T \\[0.3em]
+                  0 & 1 \\[0.3em]
+              \end{bmatrix}
+              \implies
+              K^{-1} =
+              \begin{bmatrix}
+                  R^{T} & -R^{T} \cdot T \\[0.3em]
+                  0     & 1
+              \end{bmatrix}
+          $$
+\end{itemize}
+
+\subsection{Składanie ruchów}
+
+\Large
+\begin{enumerate}
+    \item {\bf Względem osi bieżących (np. nasz statek, którym sterujemy)}
+
+          Mnożymy od lewej do prawej:
+          $$
+              K_{0}^{n} = K_{0}^{\bcancel{1}}\cdot K_{\bcancel{1}}^{\bcancel{2}} \cdot K_{\bcancel{2}}^{3} \cdot \ldots \cdot K_{n-1}^{n}
+          $$
+
+          Nie jest ważne przez jakie macierze przechodziliśmy, ważne jest jak skończyliśmy.
+
+
+          Przykład mnożenie:
+
+          $$
+              K_{0}^{1} =
+              \begin{bmatrix}
+                  R_{0}^{1} & T_{0}^{1} \\[0.3em]
+                  0         & 1
+              \end{bmatrix}
+              , \
+              K_{1}^{2} =
+              \begin{bmatrix}
+                  R_{1}^{2} & T_{1}^{2} \\[0.3em]
+                  0         & 1
+              \end{bmatrix}
+          $$
+
+          $$
+              K_{0}^{\bcancel{1}}\cdot K_{\bcancel{1}}^{2} = K_{0}^{2} =
+              \begin{bmatrix}
+                  R_{0}^{1} & T_{0}^{1} \\[0.3em]
+                  0         & 1
+              \end{bmatrix}
+              \cdot
+              \begin{bmatrix}
+                  R_{1}^{2} & T_{1}^{2} \\[0.3em]
+                  0         & 1
+              \end{bmatrix}
+              =
+              \begin{bmatrix}
+                  \begin{array}{c|c}
+                      \overbrace{R_{0}^{1}\cdot R_{1}^{2}}^{R_{0}^{2}} & \overbrace{R_{0}^{1}T_{1}^{2}+T_{0}^{1}}^{T_{0}^{2}} \\[0.3em]
+                      \hline
+                      0                                                & 1
+                  \end{array}
+              \end{bmatrix}
+          $$
+
+
+
+    \item {\bf Względem osi ustalonych (np. wybżerza portu)}
+
+          Od prawej do lewej (jest mniej ważne)
+
+\end{enumerate}
+\normalsize
+
+\newpage
+
+\subsection{Parametryzjacja obrotów}
+
+\Large
+$$
+    R_{1}\cdot R_{2} \cdot \ldots \cdot R_{n} = R_{w}
+$$
+\normalsize
+
+$R_{w}$ - wynik mnożenia macierzy obrotów, także jest obrotem
+
+\subsubsection{Reprezentacja obrotów: Kąty Eulera}
+
+Kąty Eulera (w formie ZYZ):
+
+\Large
+$$
+    E\left(\alpha, \beta, \gamma\right)=rot\left(z, \alpha\right) \cdot rot\left(y, \beta\right) \cdot rot\left(z, \gamma\right)
+$$
+\normalsize
+
+Macierz ogólna takiej rotacji:
+
+
+\Large
+$$
+    E\left(\alpha, \beta, \gamma\right)=rot\left(z, \alpha\right) \cdot rot\left(y, \beta\right) \cdot rot\left(z, \gamma\right) =
+$$
+$$
+    =
+    \begin{bmatrix}
+        {\color{purple} c_{\alpha}} & {\color{red}-}{\color{blue} s_{\alpha}} & 0 \\[0.3em]
+        {\color{blue} s_{\alpha}}   & {\color{purple} c_{\alpha}}             & 0 \\[0.3em]
+        0                           & 0                                       & 1
+    \end{bmatrix}
+    \cdot
+    \begin{bmatrix}
+        {\color{purple} c_{\beta}}             & 0 & {\color{blue} s_{\beta}}   \\[0.3em]
+        0                                      & 1 & 0                          \\[0.3em]
+        {\color{red}-}{\color{blue} s_{\beta}} & 0 & {\color{purple} c_{\beta}}
+    \end{bmatrix}
+    \cdot
+    \begin{bmatrix}
+        {\color{purple} c_{\gamma}} & {\color{red}-}{\color{blue} s_{\gamma}} & 0 \\[0.3em]
+        {\color{blue} s_{\gamma}}   & {\color{purple} c_{\gamma}}             & 0 \\[0.3em]
+        0                           & 0                                       & 1
+    \end{bmatrix}
+    =
+$$
+$$
+    =
+    \begin{bmatrix}
+        \begin{array}{c|c|c}
+            c_{\alpha}c_{\beta}c_{\gamma}-s_{\alpha}s_{\gamma} & -c_{\alpha}c_{\beta}s_{\gamma}-s_{\alpha}c_{\alpha} & c_{\alpha}s_{\beta} \\[0.3em]
+            \hline
+            s_{\alpha}c_{\beta}c_{\gamma}+c_{\alpha}s_{\gamma} & -s_{\alpha}c_{\beta}s_{\gamma}+c_{\alpha}c_{\gamma} & s_{\alpha}s_{\beta} \\[0.3em]
+            \hline
+            -s_{\beta}c_{\gamma}                               & s_{\beta}s_{\gamma}                                 & c_{\beta}
+        \end{array}
+    \end{bmatrix}
+$$
+\normalsize
+
+\newpage
+
+\subsubsection{Reprezentacja obrotów: Roll-Pitch-Jaw}
+
+Jest to reprezentacja typu oś-kąt
+
+\Large
+$$
+    RPY\left(\phi, \theta, \psi\right)=rot(z, \psi) \cdot rot(y, \theta) \cdot rot(x, \psi)
+$$
+\normalsize
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.5]{rpy.png}
+\end{figure}
+\url{https://youtu.be/pQ24NtnaLl8}
+
+\subsubsection{Reprezentacja typu oś-kąt, dla macierzy {\bf R}, k-oś (musi być znormalizowana, czyli $\norm{k}=1$)}
+
+Jak znaleźć oś z macierzy obrotu?
+
+$tr \ R$ - Ślad macierzy {\bf R}
+
+Suma elementów na przekątnej w macierzy {\bf R}:
+
+\Large
+$$
+    tr \ R=1+2\cdot c_{\theta} \implies \theta=\arccos\left(\frac{tr \ R-1}{2}\right)
+    \theta = \arccos\left(\frac{tr \ R - 1}{2}\right)
+$$
+\normalsize
+
+Obrót w okół osi {\bf k} o kąt $\theta$:
+
+\Large
+$$
+    \left[k\right]=\frac{R-R^{T}}{2\cdot\sin\theta}=
+    \begin{bmatrix}
+        0      & -k_{z} & k_{y}  \\[0.3em]
+        k_{z}  & 0      & -k_{x} \\[0.3em]
+        -k_{y} & k_{x}  & 0
+    \end{bmatrix}
+    \implies
+    k =
+    \begin{pmatrix}
+        k_{x} \\
+        k_{y} \\
+        k_{z}
+    \end{pmatrix}
+$$
+\normalsize
+
+\newpage
+
+Operacja odwrotna.
+Mamy jakiś wektor {\bf k} i chcemy go unormować, żeby miał długość $1$ i mamy
+podany kąt o jaki chcielibyśmy wykonać obrót:
+
+
+Zwykły wektor $k_{zw}$, który chemy unormować do postaci $k =
+    \begin{pmatrix}
+        k_{x} \\
+        k_{y} \\
+        k_{z}
+    \end{pmatrix}$, gdzie $\norm{k}=1$
+
+Jakiej macierzy odpowiada obrót wokół wektora {\bf k} o kąt $\theta$?
+
+
+\Large
+$$
+    rot(k, \theta)=
+    \begin{bmatrix}
+        \begin{array}{c|c|c}
+            k_{x}^{2}(1-c_{\theta})+c_{\theta}       & k_{x}k_{y}(1-c_{\theta})-k_{z}s_{\theta} & k_{x}k_{z}(1-c_{\theta})-k_{y}s_{\theta} \\[0.3em]
+            \hline
+            k_{x}k_{y}(1-c_{\theta})+k_{z}s_{\theta} & k_{y}^{2}(1-c_{\theta})+c_{\theta}       & k_{y}k_{z}(1-c_{\theta})-k_{x}s_{\theta} \\[0.3em]
+            \hline
+            k_{x}k_{z}(1-c_{\theta})-k_{y}s_{\theta} & k_{y}k_{z}(1-c_{\theta})+k_{x}s_{\theta} & k_{z}^{2}(1-c_{\theta})+c_{\theta}
+        \end{array}
+    \end{bmatrix}
+$$
+\normalsize
+
+% od poczatku Wykjlad 3ogladac, ale cos tam miala jeszcze dokonczyc z wykladu nr 2
+\end{document}
