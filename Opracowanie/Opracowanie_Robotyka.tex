@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{mathtools}
+\usepackage{amssymb}
 \usepackage[makeroom]{cancel}
 \usepackage{hyperref}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
@@ -542,9 +543,259 @@ Jest to transformacja odwrotna do transformacji {\bf oś-kąt}
 
 \section{Wykład 3}
 
+\subsection{Transformacje prędkości}
+
+Zakładamy, że ruch polega wyłącznie na zmianie orientacji ciała (brak translacji), czyli:
+
+$$
+    c\left(t\right)=
+    \begin{bmatrix}
+        R(t)  & 0 \\[0.3em]
+        0^{T} & 1
+    \end{bmatrix}
+    \cong
+    R(t)
+$$
+
+Ponieważ $R(t)$ jest macierzą {\bf ortogonalną}, w każdej chwili zachodzi:
+
+$$
+    R(t)R^{T}(t)=R^{T}(t)R(t)=I_{3}
+$$
+
+skąd wynika:
+
+$$
+    \dot R(t)R^{T}(t)+R(t)\dot R^{T}(t)=\dot R^{T}(t)R(t)+R^{T}(t)\dot R(t)=0
+$$
+
+Otrzymujemy dwa pojęcia prędkości kątowej ciała sztywnego zdefniniowane macierzami:
+
+\begin{enumerate}
+    \item $\Omega_{S}=\dot R R^{T}$ - prędkość w {\bf przestrzeni} ({\bf S} od {\bf Space})
+    \item $\Omega_{B}=R^{T} \dot R$ - prędkość w {\bf ciele} (definiowanie względem czegoś ruchomego) ({\bf B} od {\bf Body})
+\end{enumerate}
+
+
+Zachodzi:
+
+$$
+    \dot R =\Omega_{S}R=R\Omega_{B} \rightarrow \Omega_{S}=R\Omega_{B}R^{T}
+$$
+
+Obie macierze prędkości kątowej spełniają warunek:
+
+$$
+    \Omega+\Omega^{T}=0
+$$
+
+Macierz antysymetryczna/skośnie symetryczna:
+
+$$
+    \Omega = -\Omega^{T}
+$$
+
+
+Macierze $\Omega_{S}$ i $\Omega_{B}$ są skośnie symetryczne. Każda macierz skośnie symetryczna $3\times3$ jest zdefiniowana przez trzy parametry $\omega = \left(\omega_{1}, \omega_{2}, \omega_{3}\right)^{T}$:
+
+$$
+    \Omega=\left[\omega\right]=
+    \begin{bmatrix}
+        0           & -\omega_{3} & \omega_{2}  \\[0.3em]
+        \omega_{3}  & 0           & -\omega_{1} \\[0.3em]
+        -\omega_{2} & \omega_{1}  & 0
+    \end{bmatrix}
+$$
+
+Rozmieszczenie składowych wektora $\omega$ w macierzy $\left[\omega\right]$ jest takie żeby (gdzie $v$ to wektor w 3D):
+
+$$
+    \Omega v = \omega \times v
+$$
+
+\newpage
+
+Stosując to rozumowania możemy zdefiniować:
+
+\begin{itemize}
+    \item $\Omega_{S} = \left[\omega_{S}\right]$ - wektor prędkości kątowych względem układu nieruchomego w przestrzeni
+    \item $\Omega_{B} = \left[\omega_{B}\right]$ - wektor prędkości kątowych względem układu ciała
+\end{itemize}
+
+Ponieważ obrót był pierwotnie opisany w macierzy $4\times4$ tak też robimy:
+
+$$
+    \begin{bmatrix}
+        \Omega & 0 \\[0.3em]
+        0^{T}  & 0 \\[0.3em]
+    \end{bmatrix}
+$$
+
+gdzie $\Omega$ to byle które z prędkości.
 
 
 
+Rozważmy teraz przykład ogólny ruchu zawierającego zarówno przesunięcie (translacje), jak i obrót:
+
+$$
+    c(t)=
+    \begin{bmatrix}
+        R(t)  & T(t) \\[0.3em]
+        0^{T} & 1    \\[0.3em]
+    \end{bmatrix}
+$$
+
+Zróżniczkowane po czasie:
 
 
+$$
+    \dot c(t)=
+    \begin{bmatrix}
+        \dot R(t) & \dot T(t) \\[0.3em]
+        0         & 0         \\[0.3em]
+    \end{bmatrix}
+$$
+
+
+
+Macierz przedstawiająca prędkości względem przestrzeni
+
+$$
+    V_{S} = \dot c c^{-1}
+$$
+
+
+
+Macierz przedstawiająca prędkości względem ciała
+
+$$
+    V_{B} = c^{-1} \dot c
+$$
+
+Na mocy powyższych defnicji otrzymujemy:
+
+$$
+    V_{S}=
+    \begin{bmatrix}
+        \dot R & \dot T \\[0.3em]
+        0^{T}  & 0      \\[0.3em]
+    \end{bmatrix}
+    \begin{bmatrix}
+        R_{T} & -R^{T}T \\[0.3em]
+        0^{T} & 1       \\[0.3em]
+    \end{bmatrix}
+$$
+
+
+tzn.
+
+$$
+    V_{S}=
+    \begin{bmatrix}
+        \Omega_{S} & \dot T-\Omega_{S}T \\[0.3em]
+        0^{T}      & 0
+    \end{bmatrix}
+    \cong
+    v_{S}
+    =
+    \begin{pmatrix}
+        \dot T-\omega_{S}\times T \\[0.3em]
+        \omega_{S}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \dot T + \left[T\right]\omega_{S} \\[0.3em]
+        \omega_{S}
+    \end{pmatrix}
+$$
+
+\newpage
+
+Wektor $v_{S} \in \mathbb{R}^{6}$ reprezentujący macierz $V_{S}$ nazywany {\bf skrętnikiem w przestrzeni}. W podobny sposób wyznaczamy $V_{B}$:
+
+$$
+    V_{B}=
+    \begin{bmatrix}
+        R^{T}\dot R & R^{T}\dot T \\[0.3em]
+        0^{T}       & 0           \\[0.3em]
+    \end{bmatrix}
+    \cong
+    v_{B}
+    =
+    \begin{pmatrix}
+        R^{T}\dot T \\[0.3em]
+        \omega_{B}
+    \end{pmatrix}
+$$
+
+Korzystając z własności prędkości kątowych w przestrzeni i w ciele oraz z izomofrizmu $\left[ \ \right]$ otrzymujemy następujący związek między skrętnikami:
+
+$$
+    v_{S}=
+    \begin{bmatrix}
+        R     & \left[T\right]R \\[0.3em]
+        0^{T} & R
+    \end{bmatrix}
+    v_{B}
+$$
+
+
+
+Interpretacja macierzowych prędkości $V_{S}$ i $V_{B}$. Niech będzie danny punkt P w układzie ciała, o współrzędnych $p \in \mathbb{R}$. Jego współrzędne układu przestrzeni:
+
+$$
+    s=Rp+T
+$$
+
+Obliczamy prędkość $\dot s=\dot R p + T$, co po podstawieniu $p=R^{T}\left(s-T\right)$ prowadzi do wzoru:
+
+$$
+    \dot s = \dot R R^{T} (s-T)+\dot T= \omega_{S}\times (s-T)+\dot T
+$$
+
+Ostatnią zależność można zapisać jako:
+
+$$
+    \begin{pmatrix}
+        \dot s \\[0.3em]
+        0
+    \end{pmatrix}
+    =V_{S}
+    \begin{pmatrix}
+        s \\[0.3em]
+        1
+    \end{pmatrix}
+$$
+
+Wynika stąd, że macierzowa prędkość $V_{S}$ określa prędkość ruchu punktu P o współrzędnych jednorodnych $(p^{T}, 1)^{T}$, względem układu przestrzeni. Prowadz to do wniosku:
+
+$$
+    \begin{pmatrix}
+        R^{T}\dot s \\[0.3em]
+        0
+    \end{pmatrix}
+    =V_{B}
+    \begin{pmatrix}
+        p \\[0.3em]
+        1
+    \end{pmatrix}
+$$
+
+
+\newpage
+
+\subsection{Kinematyka i algorytm Denavita-Hartenberga}
+
+Liczenie kinematyki manipulatora.
+
+Chcemy opisać położenie i orientacje ostatniego ogniwa w manipulatorze, które nazywa się chwytakiem (end-effector), ostatni układ współrzednych to jest układ efektora. Mamy też zerowy układ współrzednych (ten nieruchomy) względem, którego wszystko chcemy przeliczać. Zwykle jest to jakiś punkt, który gdzieś się znajduje np. jakaś platforma. Układ zerowy nosi nazwę układu "podstawowego" lub "bazowego" nalezy go traktować jako układ przestrzeni.
+
+Opis położenia końcówki ramienia manupulatora, który np przykręca śróbkę. Musi być w obeć sróbki pod dobrym kontem itp. W związku z tym naszym celem jest zorientowanie się gdzie znajduje się koncówka manipulatora, jaką ma orientację i czy jest ona dobra.
+Tak więc musimy wyrazić położenie końcówki względem układu podstawowego. Uzyskanie takiej transofrmacji nazywa się "kinematyką".
+Taką kinematykę wylicza się względem algorytmu {\bf Danovita-Hartenberga}.
+
+
+Za pomocą $4$ parametrów chcemy opisać ruch jednego układu współrzednych względem drugiego układu współrzednych.
+
+% 1:15:00
 \end{document}
