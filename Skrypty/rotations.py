@@ -30,6 +30,7 @@ def rot_y_fun(gamma):
         [-sp.sin(gamma), 0, sp.cos(gamma)]
     ])
 
+
 def trans_z_fun(c):
     return sp.Matrix([
         [0],
@@ -54,7 +55,6 @@ def trans_z_fun(b):
     ])
 
 
-
 # Jednorodne:
 
 def rot_x(alpha):
@@ -65,13 +65,15 @@ def rot_x(alpha):
         [0,             0,              0, 1]
     ])
 
+
 def rot_y(beta):
     return sp.Matrix([
-        [ sp.cos(beta), 0, sp.sin(beta), 0],
+        [sp.cos(beta), 0, sp.sin(beta), 0],
         [0,             1,            0, 0],
         [-sp.sin(beta), 0, sp.cos(beta), 0],
         [0,             0,            0, 1]
     ])
+
 
 def rot_z(gamma):
     return sp.Matrix([
@@ -100,8 +102,6 @@ def trans_y(b):
     ])
 
 
-
-
 def trans_z(c):
     return sp.Matrix([
         [1, 0, 0, 0],
@@ -111,12 +111,22 @@ def trans_z(c):
     ])
 
 
+def rot(axis, var):
+    if axis.name == 'z':
+        return rot_z(var)
+    elif axis.name == 'x':
+        return rot_x(var)
+    elif axis.name == 'y':
+        return rot_y(var)
 
 
-
-
-
-
+def trans(axis, var):
+    if axis.name == 'z':
+        return trans_z(var)
+    elif axis.name == 'x':
+        return trans_x(var)
+    elif axis.name == 'y':
+        return trans_y(var)
 
 
 # R = sp.Matrix([
